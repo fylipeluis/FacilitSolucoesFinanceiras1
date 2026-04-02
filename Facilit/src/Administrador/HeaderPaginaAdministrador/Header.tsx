@@ -1,7 +1,7 @@
 import "./Header.css"
 
 export default function HeaderPaginaAdministrador(){
-    return(
+    return (
         <div className="header">
         </div>
     )
