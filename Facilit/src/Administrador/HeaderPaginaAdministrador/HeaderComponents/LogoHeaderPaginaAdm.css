@@ -1,0 +1,17 @@
+.logo-title {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex: 1; /* Título à esquerda */
+}
+
+/* Logo com tamanho visível */
+.logo {
+  width: 120px; /* Aumentado para melhor visibilidade */
+  height: auto;
+  object-fit: contain;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
