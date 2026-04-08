@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
-import PaginaAdministrador from "./Administrador/Adm"
+import PaginaAdministrador from "./Telas/Administrador/Adm"
 import "./App.css";
 
 

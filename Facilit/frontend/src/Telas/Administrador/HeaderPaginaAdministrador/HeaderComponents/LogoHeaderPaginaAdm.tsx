@@ -1,5 +1,5 @@
 import "./LogoHeaderPaginaAdm.css"
-import logo from "../../../assets/Made with insMind-.png"
+import logo from "../../../../assets/logoFacilit.png"
 
 export function LogoHeaderPaginaAdm(){
     return(
