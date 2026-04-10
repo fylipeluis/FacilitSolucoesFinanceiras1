@@ -1,4 +1,4 @@
-import "./TituloHeaderPaginaAdm.css"
+import "./TituloHeaderPaginaAdm.css";
 
 export function TituloHeaderPaginaAdm(){
     return(

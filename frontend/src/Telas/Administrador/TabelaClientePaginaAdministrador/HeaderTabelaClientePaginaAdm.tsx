@@ -1,4 +1,4 @@
-import "./HeaderTabelaClientePaginaAdm.css"
+import "./HeaderTabelaClientePaginaAdm.css";
 
 export function HeaderTabelaClientePaginaAdm (){
     return(
