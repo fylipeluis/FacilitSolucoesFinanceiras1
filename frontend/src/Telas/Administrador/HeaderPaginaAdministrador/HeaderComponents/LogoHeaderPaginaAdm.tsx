@@ -1,4 +1,4 @@
-import "./LogoHeaderPaginaAdm.css"
+import "./LogoHeaderPaginaAdm.css";
 import logo from "../../../../assets/logoFacilit.png"
 
 export function LogoHeaderPaginaAdm(){

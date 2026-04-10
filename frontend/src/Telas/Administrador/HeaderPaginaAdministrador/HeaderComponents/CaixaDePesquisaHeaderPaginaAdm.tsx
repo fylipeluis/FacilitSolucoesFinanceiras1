@@ -1,4 +1,4 @@
-import "./CaixaDePesquisaHeaderPaginaAdm.css"
+import "./CaixaDePesquisaHeaderPaginaAdm.css";
 
 export default function CaixaDePesquisaHeaderPaginaAdm() {
   return (
