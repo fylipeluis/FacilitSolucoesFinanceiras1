@@ -1,0 +1,20 @@
+.header {
+  width: 100%;
+  top: 0;
+  left: 0;
+  background: transparent; /* transparente */
+  display: flex;
+  align-items: center;
+  padding: 10px 0px;
+}
+
+.logo-header {
+  display: flex;
+  align-items: center;
+  margin-top: -60px;
+}
+
+.logo {
+  height: 250px; /* controla o tamanho da logo */
+  object-fit: contain;
+}
