@@ -1,6 +1,6 @@
 import type { Cliente, ClienteUpdatePayload } from "../types/cliente";
 
-const BASE_URL = "http://localhost:8080/clientes" as const;
+const BASE_URL = "http://localhost:8000/clientes" as const;
 
 export async function fetchClientes(): Promise<Cliente[]> {
   const response = await fetch(BASE_URL);
