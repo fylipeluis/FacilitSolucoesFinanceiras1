@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { getStatusClass } from "../../../services/clienteService";
-import type { Cliente, ClienteUpdatePayload } from "../../../Js/types/cliente";
+import type { Cliente, ClienteUpdatePayload } from "../../../types/cliente";
 
 interface Props {
   cliente: Cliente;

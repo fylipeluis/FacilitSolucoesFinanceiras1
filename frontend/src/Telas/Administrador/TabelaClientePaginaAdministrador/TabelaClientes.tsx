@@ -1,5 +1,6 @@
 import { useClientes } from "../../../hooks/useClientes";
 import { LinhaCliente } from "./LinhaCliente";
+import "./TabelaClientes.css"
 
 export default function TabelaClientes() {
   const { clientes, busca, setBusca, loading, erro, excluir, atualizar } =
@@ -9,7 +10,7 @@ export default function TabelaClientes() {
   if (erro) return <p>{erro}</p>;
 
   return (
-    <div>
+    <div className="table-container">
       <table>
         <tbody>
           {clientes.map((cliente) => (
