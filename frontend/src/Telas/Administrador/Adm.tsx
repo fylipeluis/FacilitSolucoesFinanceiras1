@@ -1,4 +1,4 @@
-import TabelaClientes from "../../../../backend/Js/components/TabelaClientes";
+import TabelaClientes from "./TabelaClientePaginaAdministrador/TabelaClientes";
 import  HeaderPaginaAdministrador  from "./HeaderPaginaAdministrador/Header";
 import { HeaderTabelaClientePaginaAdm } from "./TabelaClientePaginaAdministrador/HeaderTabelaClientePaginaAdm";
 
