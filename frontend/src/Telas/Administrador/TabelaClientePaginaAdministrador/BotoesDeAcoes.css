@@ -1,0 +1,45 @@
+.btn-actions {
+  display: flex;
+  gap: 8px; /* espaço entre os botões */
+}
+
+.btn-edit,
+.btn-delete {
+  color: white;
+  padding: 6px 10px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 12px;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn-edit {
+  background-color: #e7750a;
+}
+
+.btn-delete {
+  background-color: #ef4444;
+  color: white;
+}
+
+.btn-actions:hover {
+  opacity: 0.8;
+}
+
+.btn-confirmar-delete {
+  background: #e74c3c;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+.btn-cancelar-delete {
+  background: #ccc;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
