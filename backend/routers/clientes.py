@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, Request
 from mysql.connector import Error
 from backend.database.connection import conectar
-from backend.schemas.cliente import ClienteUpdate
+from backend.schemas.cliente import ClienteUpdate, ClienteAtivarComFatura
 
 router = APIRouter(tags=["clientes"])
 
@@ -14,8 +14,8 @@ async def receber_dados_forms(request: Request):
         connection = conectar()
         cursor = connection.cursor()
         cursor.execute(
-            "INSERT INTO clientes (nome_completo, telefone, documento) VALUES (%s, %s, %s)",
-            (dados.get("nome"), dados.get("telefone"), dados.get("documento")),
+            "INSERT INTO clientes (nome_completo, telefone, documento, status_cliente) VALUES (%s, %s, %s, %s)",
+            (dados.get("nome"), dados.get("telefone"), dados.get("documento"), "PENDENTE"),
         )
         connection.commit()
         return {"status": "sucesso", "mensagem": "Cliente salvo no banco"}
@@ -84,6 +84,61 @@ def excluir_cliente(id: int):
 
         return {"status": "sucesso", "mensagem": "Cliente excluído"}
     except Error as e:
+        raise HTTPException(status_code=500, detail=str(e))
+    finally:
+        if connection and connection.is_connected():
+            cursor.close()
+            connection.close()
+
+
+@router.post("/clientes/{id}/ativar-com-fatura")
+def ativar_cliente_com_fatura(id: int, dados: ClienteAtivarComFatura):
+    """
+    Ativa um cliente (muda status para ATIVO) e cria uma fatura com cobranças.
+    Fluxo: Cliente PENDENTE -> (preenche dados) -> Cliente ATIVO
+    """
+    connection = None
+    cursor = None
+    try:
+        connection = conectar()
+        cursor = connection.cursor()
+
+        # Verifica se cliente existe
+        cursor.execute("SELECT id_cliente FROM clientes WHERE id_cliente = %s", (id,))
+        if not cursor.fetchone():
+            raise HTTPException(status_code=404, detail="Cliente não encontrado")
+
+        # Cria a fatura
+        cursor.execute(
+            """
+            INSERT INTO adm_faturas (id_cliente, valor_emprestimo, qtd_parcelas, inicio_cobranca)
+            VALUES (%s, %s, %s, %s)
+            """,
+            (id, dados.valor_emprestimo, dados.qtd_parcelas, dados.inicio_cobranca),
+        )
+        id_fatura = cursor.lastrowid
+
+        # Gera as cobranças automaticamente
+        valor_parcela = round(dados.valor_emprestimo / dados.qtd_parcelas, 2)
+        for i in range(1, dados.qtd_parcelas + 1):
+            cursor.execute(
+                """
+                INSERT INTO cobrancas (id_cliente, id_fatura, valor_cobranca, numero_parcela)
+                VALUES (%s, %s, %s, %s)
+                """,
+                (id, id_fatura, valor_parcela, i),
+            )
+
+        # Atualiza status do cliente para ATIVO
+        cursor.execute(
+            "UPDATE clientes SET status_cliente = 'ATIVO' WHERE id_cliente = %s",
+            (id,),
+        )
+
+        connection.commit()
+        return {"status": "sucesso", "mensagem": "Cliente ativado com fatura criada", "id_fatura": id_fatura}
+    except Error as e:
+        connection.rollback()
         raise HTTPException(status_code=500, detail=str(e))
     finally:
         if connection and connection.is_connected():
