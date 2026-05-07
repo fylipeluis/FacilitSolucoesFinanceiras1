@@ -13,5 +13,11 @@ export function filtrarClientes(clientes: Cliente[], termo: string): Cliente[] {
 export function getStatusClass(
   status: Cliente["status_cliente"]
 ): string {
-  return status === "ATIVO" ? "status-ativo" : "status-inativo";
+  const map: Record<Cliente["status_cliente"], string> = {
+    ATIVO:    "status-ativo",
+    INATIVO:  "status-inativo",
+    PENDENTE: "status-pendente",
+  };
+
+  return map[status];
 }

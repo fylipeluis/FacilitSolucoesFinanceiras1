@@ -2,6 +2,7 @@ import { useState } from "react";
 import { getStatusClass } from "../../../services/clienteService";
 import type { Cliente } from "../../../types/cliente";
 import "./BotoesDeAcoes.css";
+import "./LinhaCliente.css";
 
 interface Props {
   cliente: Cliente;
