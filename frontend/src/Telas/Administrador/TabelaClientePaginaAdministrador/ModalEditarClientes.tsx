@@ -1,5 +1,9 @@
 import { useState, useEffect } from "react";
 import type { Cliente, ClienteUpdatePayload } from "../../../types/cliente";
+import {
+  ativarClienteComFatura,
+  type AtivarClientePayload,
+} from "../../../api/clienteApi";
 import "./ModalEditarClientes.css";
 
 interface Props {
@@ -9,28 +13,65 @@ interface Props {
 }
 
 export function ModalEditarCliente({ cliente, onSalvar, onFechar }: Props) {
-  const [form, setForm] = useState<ClienteUpdatePayload>({
+  const [formBasico, setFormBasico] = useState<ClienteUpdatePayload>({
     nome_completo: "",
     documento: "",
     telefone: "",
     status_cliente: "PENDENTE",
   });
 
+  const [formFatura, setFormFatura] = useState<AtivarClientePayload>({
+    valor_emprestimo: 0,
+    qtd_parcelas: 0,
+    inicio_cobranca: "",
+  });
+
+  const [carregando, setCarregando] = useState(false);
+
   useEffect(() => {
-    if (cliente) setForm(cliente);
+    if (cliente) setFormBasico(cliente);
   }, [cliente]);
 
   if (!cliente) return null;
 
+  const isPendente = cliente.status_cliente === "PENDENTE";
+
   async function handleSalvar() {
-    await onSalvar(cliente!.id_cliente, form);
-    onFechar();
+    try {
+      setCarregando(true);
+
+      if (isPendente) {
+        // Cliente PENDENTE: ativa com fatura
+        await ativarClienteComFatura(cliente.id_cliente, formFatura);
+      } else {
+        // Cliente ATIVO/INATIVO: apenas atualiza dados básicos
+        await onSalvar(cliente.id_cliente, formBasico);
+      }
+
+      onFechar();
+    } catch (erro) {
+      console.error("Erro ao salvar:", erro);
+      alert("Erro ao salvar as informações");
+    } finally {
+      setCarregando(false);
+    }
   }
 
-  function handleChange(
+  function handleChangeBasico(
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    setFormBasico({ ...formBasico, [e.target.name]: e.target.value });
+  }
+
+  function handleChangeFatura(e: React.ChangeEvent<HTMLInputElement>) {
+    const { name, value } = e.target;
+    setFormFatura({
+      ...formFatura,
+      [name]:
+        name === "valor_emprestimo" || name === "qtd_parcelas"
+          ? Number(value)
+          : value,
+    });
   }
 
   return (
@@ -41,16 +82,20 @@ export function ModalEditarCliente({ cliente, onSalvar, onFechar }: Props) {
         </span>
 
         <div className="client-form-container">
-          <h2>Dados do Cliente</h2>
+          <h2>{isPendente ? "Ativar Cliente" : "Dados do Cliente"}</h2>
+          <p style={{ color: "#666", fontSize: "0.9em", marginBottom: "15px" }}>
+            Status: <strong>{cliente.status_cliente}</strong>
+          </p>
 
           <div className="client-form">
+            {/* Dados Básicos */}
             <div className="form-group">
               <label>Nome</label>
               <input
                 name="nome_completo"
                 type="text"
-                value={form.nome_completo}
-                onChange={handleChange}
+                value={formBasico.nome_completo}
+                onChange={handleChangeBasico}
               />
             </div>
 
@@ -59,8 +104,8 @@ export function ModalEditarCliente({ cliente, onSalvar, onFechar }: Props) {
               <input
                 name="documento"
                 type="text"
-                value={form.documento}
-                onChange={handleChange}
+                value={formBasico.documento}
+                onChange={handleChangeBasico}
               />
             </div>
 
@@ -69,47 +114,72 @@ export function ModalEditarCliente({ cliente, onSalvar, onFechar }: Props) {
               <input
                 name="telefone"
                 type="text"
-                value={form.telefone}
-                onChange={handleChange}
+                value={formBasico.telefone}
+                onChange={handleChangeBasico}
               />
             </div>
 
-            <div className="form-group">
-              <label>Email</label>
-              <input name="email" type="email" onChange={handleChange} />
-            </div>
+            {/* Dados de Fatura (apenas se PENDENTE) */}
+            {isPendente && (
+              <>
+                <div className="form-group">
+                  <label>Valor Emprestado</label>
+                  <input
+                    name="valor_emprestimo"
+                    type="number"
+                    step="0.01"
+                    value={formFatura.valor_emprestimo || ""}
+                    onChange={handleChangeFatura}
+                    placeholder="0.00"
+                  />
+                </div>
 
-            <div className="form-group">
-              <label>Valor Emprestado</label>
-              <input name="valor" type="number" onChange={handleChange} />
-            </div>
+                <div className="form-group">
+                  <label>Qtd. Parcelas</label>
+                  <input
+                    name="qtd_parcelas"
+                    type="number"
+                    min="1"
+                    value={formFatura.qtd_parcelas || ""}
+                    onChange={handleChangeFatura}
+                    placeholder="0"
+                  />
+                </div>
 
-            <div className="form-group">
-              <label>Qtd. Parcelas</label>
-              <input name="parcelas" type="text" onChange={handleChange} />
-            </div>
-
-            <div className="form-group">
-              <label>Status</label>
-              <select
-                name="status_cliente"
-                value={form.status_cliente}
-                onChange={handleChange}
+                <div className="form-group">
+                  <label>Data Início de Cobrança</label>
+                  <input
+                    name="inicio_cobranca"
+                    type="date"
+                    value={formFatura.inicio_cobranca}
+                    onChange={handleChangeFatura}
+                  />
+                </div>
+              </>
+            )}
+          </div>
+          <div className="form-buttons">
+            {isPendente && (
+              <button
+                className="btn-save"
+                onClick={handleSalvar}
+                disabled={
+                  carregando ||
+                  !formFatura.valor_emprestimo ||
+                  !formFatura.qtd_parcelas ||
+                  !formFatura.inicio_cobranca
+                }
               >
-                <option value="PENDENTE">Pendente</option>
-                <option value="ATIVO">Ativo</option>
-                <option value="INATIVO">Inativo</option>
-              </select>
-            </div>
-
-            <div className="form-buttons">
-              <button className="btn-save" onClick={handleSalvar}>
-                Salvar
+                {carregando ? "Salvando..." : "Ativar Cliente"}
               </button>
-              <button className="btn-cancel" onClick={onFechar}>
-                Cancelar
-              </button>
-            </div>
+            )}
+            <button
+              className="btn-cancel"
+              onClick={onFechar}
+              disabled={carregando}
+            >
+              Cancelar
+            </button>
           </div>
         </div>
       </div>

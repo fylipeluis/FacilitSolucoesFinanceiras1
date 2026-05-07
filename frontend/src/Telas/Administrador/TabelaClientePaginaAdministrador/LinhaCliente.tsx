@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { getStatusClass } from "../../../services/clienteService";
-import type { Cliente, ClienteUpdatePayload } from "../../../types/cliente";
+import type { Cliente } from "../../../types/cliente";
+import "./BotoesDeAcoes.css";
+import "./LinhaCliente.css";
 
 interface Props {
   cliente: Cliente;
   onExcluir: (id: number) => Promise<void>;
-  onEditar: (id: number, dados: ClienteUpdatePayload) => void;
+  onEditar: () => void;
 }
 
 export function LinhaCliente({ cliente, onExcluir, onEditar }: Props) {
@@ -36,21 +38,32 @@ export function LinhaCliente({ cliente, onExcluir, onEditar }: Props) {
         </span>
       </td>
 
-      <td>
+      <td className="btn-actions">
         {confirmando ? (
           <>
             <span>Confirmar?</span>
-            <button onClick={handleExcluir} disabled={excluindo}>
+            <button
+              className="btn-confirmar-delete"
+              onClick={handleExcluir}
+              disabled={excluindo}
+            >
               {excluindo ? "Excluindo..." : "Sim"}
             </button>
-            <button onClick={() => setConfirmando(false)}>Cancelar</button>
+            <button
+              className="btn-cancelar-delete"
+              onClick={() => setConfirmando(false)}
+            >
+              Cancelar
+            </button>
           </>
         ) : (
           <>
-            <button onClick={() => onEditar(cliente.id_cliente, cliente)}>
+            <button className="btn-edit" onClick={onEditar}>
               Editar
             </button>
-            <button onClick={() => setConfirmando(true)}>Excluir</button>
+            <button className="btn-delete" onClick={() => setConfirmando(true)}>
+              Excluir
+            </button>
           </>
         )}
       </td>

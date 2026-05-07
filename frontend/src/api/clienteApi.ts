@@ -31,3 +31,23 @@ export async function deleteCliente(id: number): Promise<void> {
 
   if (!response.ok) throw new Error("Erro ao excluir cliente");
 }
+
+export interface AtivarClientePayload {
+  valor_emprestimo: number;
+  qtd_parcelas: number;
+  inicio_cobranca: string; // formato: YYYY-MM-DD
+}
+
+export async function ativarClienteComFatura(
+  id: number,
+  dados: AtivarClientePayload
+): Promise<{ id_fatura: number }> {
+  const response = await fetch(`${BASE_URL}/${id}/ativar-com-fatura`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(dados),
+  });
+
+  if (!response.ok) throw new Error("Erro ao ativar cliente com fatura");
+  return response.json();
+}
