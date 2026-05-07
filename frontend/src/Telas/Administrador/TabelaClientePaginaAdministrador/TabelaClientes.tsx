@@ -5,9 +5,21 @@ import { ModalEditarCliente } from "./ModalEditarClientes";
 import type { Cliente } from "../../../types/cliente";
 import "./TabelaClientes.css";
 
-export default function TabelaClientes() {
+interface Props {
+  termoPesquisa: string;
+}
+
+function filtrarClientes(clientes: Cliente[], termo: string): Cliente[] {
+  if (!termo) return clientes;
+  return clientes.filter((cliente) =>
+    cliente.nome_completo.toLowerCase().includes(termo.toLowerCase()),
+  );
+}
+
+export default function TabelaClientes({ termoPesquisa }: Props) {
   const { clientes, loading, erro, excluir, atualizar } = useClientes();
   const [clienteEditando, setClienteEditando] = useState<Cliente | null>(null);
+  const clientesFiltrados = filtrarClientes(clientes, termoPesquisa);
 
   if (loading) return <p>Carregando...</p>;
   if (erro) return <p>{erro}</p>;
@@ -16,7 +28,7 @@ export default function TabelaClientes() {
     <div className="table-container">
       <table>
         <tbody>
-          {clientes.map((cliente) => (
+          {clientesFiltrados.map((cliente) => (
             <LinhaCliente
               key={cliente.id_cliente}
               cliente={cliente}
