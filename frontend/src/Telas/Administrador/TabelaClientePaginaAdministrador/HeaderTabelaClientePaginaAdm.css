@@ -1,6 +1,22 @@
+.header-tabela-wrapper {
+  width: 95%;
+  margin: 30px auto 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 30px;
+}
+
+.header-tabela-wrapper h2 {
+  font-size: 24px;
+  font-weight: 600;
+  color: #fff;
+  margin: 0;
+}
+
 .table-container {
   width: 95%;
-  margin: 40px auto; /* Espaço após o header */
+  margin: 20px auto; /* Espaço após o header */
   background: white;
   padding: 30px;
   border-radius: 15px;
