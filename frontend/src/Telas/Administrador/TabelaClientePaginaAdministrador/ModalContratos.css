@@ -1,0 +1,184 @@
+.modal-contratos {
+  display: flex;
+  position: fixed;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.55);
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.modal-content-contratos {
+  background: #ffffff;
+  width: 90%;
+  max-width: 1000px;
+  max-height: 90vh;
+  padding: 35px 40px;
+  border-radius: 18px;
+  overflow-y: auto;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+  animation: aparecerModal 0.25s ease;
+}
+
+.modal-header-contratos {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  border-bottom: 2px solid #f0f0f0;
+  padding-bottom: 20px;
+}
+
+.modal-header-contratos h2 {
+  margin: 0;
+  color: #2f2f2f;
+  font-size: 24px;
+}
+
+.fechar-contratos {
+  font-size: 28px;
+  cursor: pointer;
+  color: #999;
+  transition: color 0.2s;
+}
+
+.fechar-contratos:hover {
+  color: #e7750a;
+}
+
+.carregando,
+.erro,
+.sem-contratos {
+  text-align: center;
+  padding: 40px 20px;
+  font-size: 16px;
+}
+
+.carregando {
+  color: #666;
+}
+
+.erro {
+  color: #ef4444;
+  background: #fee2e2;
+  padding: 15px;
+  border-radius: 8px;
+}
+
+.sem-contratos {
+  color: #999;
+}
+
+.contrato-card {
+  background: #f9f9f9;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 25px;
+  margin-bottom: 20px;
+  transition: all 0.3s ease;
+}
+
+.contrato-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.contrato-header h3 {
+  margin: 0 0 15px 0;
+  color: #2f2f2f;
+  font-size: 18px;
+}
+
+.contrato-info {
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+  padding-top: 15px;
+  border-top: 1px solid #e0e0e0;
+}
+
+.contrato-info span {
+  font-size: 14px;
+  color: #555;
+}
+
+.contrato-info strong {
+  color: #2f2f2f;
+  font-weight: 600;
+}
+
+.parcelas-container {
+  overflow-x: auto;
+}
+
+.tabela-parcelas {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+}
+
+.tabela-parcelas thead {
+  background-color: #f0f0f0;
+}
+
+.tabela-parcelas th {
+  padding: 12px;
+  text-align: left;
+  font-weight: 600;
+  color: #2f2f2f;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.tabela-parcelas td {
+  padding: 12px;
+  border-bottom: 1px solid #e0e0e0;
+  color: #555;
+}
+
+.tabela-parcelas tbody tr:hover {
+  background-color: #fafafa;
+}
+
+.status-parcela {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.status-parcela.pendente {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+.status-parcela.paga {
+  background-color: #dcfce7;
+  color: #166534;
+}
+
+.status-parcela.vencida {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+.status-parcela.cancelada {
+  background-color: #e5e7eb;
+  color: #4b5563;
+}
+
+@keyframes aparecerModal {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}

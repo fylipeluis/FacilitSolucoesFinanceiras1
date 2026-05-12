@@ -8,11 +8,20 @@ interface Props {
   cliente: Cliente;
   onExcluir: (id: number) => Promise<void>;
   onEditar: () => void;
+  onVerContratos: () => void;
 }
 
-export function LinhaCliente({ cliente, onExcluir, onEditar }: Props) {
+export function LinhaCliente({
+  cliente,
+  onExcluir,
+  onEditar,
+  onVerContratos,
+}: Props) {
   const [confirmando, setConfirmando] = useState(false);
   const [excluindo, setExcluindo] = useState(false);
+
+    const isAtivo = cliente.status_cliente === "ATIVO";
+
 
   async function handleExcluir() {
     try {
@@ -64,6 +73,12 @@ export function LinhaCliente({ cliente, onExcluir, onEditar }: Props) {
             <button className="btn-delete" onClick={() => setConfirmando(true)}>
               Excluir
             </button>
+
+            {isAtivo && (
+              <button className="btn-contract" onClick={onVerContratos}>
+                Contrato
+              </button>
+            )}
           </>
         )}
       </td>
