@@ -1,8 +1,0 @@
-.login {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh; /* Ocupa a altura toda da tela */
-  width: 100%;
-  background: linear-gradient(135deg, #134cc8, #f07800eb);
-
-}
