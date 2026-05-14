@@ -1,0 +1,131 @@
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #134cc8, #f07800eb);
+}
+
+.box-pagina-de-login {
+      background: #ffffff;
+      backdrop-filter: blur(15px);
+    border-radius: 20px;
+  padding: 2rem;
+  width: 360px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.box-pagina-de-login h1 {
+  font-size: 22px;
+  font-weight: 600;
+  color: #0f172a;
+  margin: 0;
+}
+
+.box-pagina-de-login p {
+  font-size: 14px;
+  color: black;
+  margin: 0;
+}
+
+/* tabs */
+.tab-group {
+  display: flex;
+  background: #f1f5f9;
+  border-radius: 8px;
+  padding: 3px;
+  gap: 3px;
+}
+
+.tab {
+  flex: 1;
+  padding: 8px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  background: transparent;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.15s ease;
+}
+
+.tab.active {
+  background: #ffffff;
+  color: #0f172a;
+  font-weight: 500;
+  border: 1px solid #e2e8f0;
+}
+
+.tab:not(.active):hover {
+  color: #0f172a;
+}
+
+/* campos */
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.input-group label {
+  font-size: 13px;
+  font-weight: 500;
+  color: #0f172a;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #0f172a;
+  background: #ffffff;
+  box-sizing: border-box;
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+
+.input-group input::placeholder {
+  color: #94a3b8;
+}
+
+.input-group input:focus {
+  border-color: #185fa5;
+  box-shadow: 0 0 0 3px rgba(24, 95, 165, 0.12);
+}
+
+/* botão principal */
+.btn-primary {
+  width: 100%;
+  padding: 11px;
+  background: #185fa5;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.btn-primary:hover {
+  background: #0c447c;
+}
+
+.btn-primary:active {
+  transform: scale(0.98);
+}
+
+/* rodapé */
+.footer {
+  font-size: 12px;
+  color: #000000;
+  text-align: center;
+}
