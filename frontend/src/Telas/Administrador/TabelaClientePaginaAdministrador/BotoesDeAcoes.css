@@ -4,6 +4,7 @@
 }
 
 .btn-edit,
+.btn-contract,
 .btn-delete {
   color: white;
   padding: 6px 10px;
@@ -17,6 +18,10 @@
 
 .btn-edit {
   background-color: #e7750a;
+}
+
+.btn-contract {
+  background-color: #616364;
 }
 
 .btn-delete {
