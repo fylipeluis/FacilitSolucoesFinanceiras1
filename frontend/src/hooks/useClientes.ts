@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import { fetchClientes, putCliente, deleteCliente } from "../api/clienteApi";
+import { fetchClientes, putCliente, deleteCliente, ativarClienteComFatura, type AtivarClientePayload } from "../api/clienteApi";
 import { filtrarClientes } from "../services/clienteService";
 import type { Cliente, ClienteUpdatePayload } from "../types/cliente";
 
@@ -25,6 +25,15 @@ export function useClientes() {
     load();
   }, []);
 
+  const recarregarClientes = useCallback(async () => {
+    try {
+      const data = await fetchClientes();
+      setClientes(data);
+    } catch (e) {
+      setErro("Erro ao recarregar clientes");
+    }
+  }, []);
+
   const excluir = useCallback(async (id: number) => {
     await deleteCliente(id);
     setClientes((prev) => prev.filter((c) => c.id_cliente !== id));
@@ -40,6 +49,15 @@ export function useClientes() {
     []
   );
 
+  const ativar = useCallback(
+    async (id: number, dados: AtivarClientePayload) => {
+      await ativarClienteComFatura(id, dados);
+      // Recarrega a lista completa após ativar
+      await recarregarClientes();
+    },
+    [recarregarClientes]
+  );
+
   return {
     clientes: filtrarClientes(clientes, busca),
     busca,
@@ -48,5 +66,6 @@ export function useClientes() {
     erro,
     excluir,
     atualizar,
+    ativar,
   };
 }

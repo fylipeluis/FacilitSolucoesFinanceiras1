@@ -1,18 +1,23 @@
-import { useState, useEffect } from "react";
-import type { Cliente, ClienteUpdatePayload } from "../../../types/cliente";
+import { useEffect, useState } from "react";
 import {
-  ativarClienteComFatura,
-  type AtivarClientePayload,
+  type AtivarClientePayload
 } from "../../../api/clienteApi";
+import type { Cliente, ClienteUpdatePayload } from "../../../types/cliente";
 import "./ModalEditarClientes.css";
 
 interface Props {
   cliente: Cliente | null;
   onSalvar: (id: number, dados: ClienteUpdatePayload) => Promise<void>;
+  onAtivar: (id: number, dados: AtivarClientePayload) => Promise<void>;
   onFechar: () => void;
 }
 
-export function ModalEditarCliente({ cliente, onSalvar, onFechar }: Props) {
+export function ModalEditarCliente({
+  cliente,
+  onSalvar,
+  onAtivar,
+  onFechar,
+}: Props) {
   const [formBasico, setFormBasico] = useState<ClienteUpdatePayload>({
     nome_completo: "",
     documento: "",
@@ -42,7 +47,7 @@ export function ModalEditarCliente({ cliente, onSalvar, onFechar }: Props) {
 
       if (isPendente) {
         // Cliente PENDENTE: ativa com fatura
-        await ativarClienteComFatura(cliente.id_cliente, formFatura);
+        await onAtivar(cliente.id_cliente, formFatura);
       } else {
         // Cliente ATIVO/INATIVO: apenas atualiza dados básicos
         await onSalvar(cliente.id_cliente, formBasico);
@@ -158,6 +163,7 @@ export function ModalEditarCliente({ cliente, onSalvar, onFechar }: Props) {
               </>
             )}
           </div>
+
           <div className="form-buttons">
             {isPendente && (
               <button
