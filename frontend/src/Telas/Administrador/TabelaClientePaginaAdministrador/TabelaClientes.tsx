@@ -8,7 +8,7 @@ import "./TabelaClientes.css";
 
 
 export default function TabelaClientes() {
-  const { clientes, loading, erro, excluir, atualizar } = useClientes();
+  const { clientes, loading, erro, excluir, atualizar, ativar } = useClientes();
   const [clienteEditando, setClienteEditando] = useState<Cliente | null>(null);
   const [clienteContratos, setClienteContratos] = useState<number | null>(null);
   const [termoPesquisa, setTermoPesquisa] = useState("");
@@ -65,6 +65,7 @@ export default function TabelaClientes() {
         <ModalEditarCliente
           cliente={clienteEditando}
           onSalvar={atualizar}
+          onAtivar={ativar}
           onFechar={() => setClienteEditando(null)}
         />
 

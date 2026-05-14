@@ -1,21 +1,47 @@
-.btn-actions {
+.form-buttons {
   display: flex;
-  gap: 8px; /* espaço entre os botões */
+  gap: 8px;
 }
 
+.btn-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* BOTÕES */
 .btn-edit,
 .btn-contract,
 .btn-delete {
   color: white;
-  padding: 6px 10px;
   border: none;
   border-radius: 6px;
   cursor: pointer;
   font-size: 12px;
   text-decoration: none;
-  display: inline-block;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 6px 10px;
+  height: 32px;
+  box-sizing: border-box;
+
+  transition: opacity 0.2s ease;
 }
 
+/* largura fixa para alinhamento */
+.btn-edit,
+.btn-contract {
+  width: 120px;
+}
+
+.btn-delete {
+  width: 70px;
+}
+
+/* CORES */
 .btn-edit {
   background-color: #e7750a;
 }
@@ -26,13 +52,16 @@
 
 .btn-delete {
   background-color: #ef4444;
-  color: white;
 }
 
-.btn-actions:hover {
+/* HOVER */
+.btn-edit:hover,
+.btn-contract:hover,
+.btn-delete:hover {
   opacity: 0.8;
 }
 
+/* BOTÕES DE CONFIRMAÇÃO */
 .btn-confirmar-delete {
   background: #e74c3c;
   color: white;
@@ -40,6 +69,7 @@
   padding: 5px 10px;
   margin-right: 5px;
   cursor: pointer;
+  border-radius: 6px;
 }
 
 .btn-cancelar-delete {
@@ -47,4 +77,5 @@
   border: none;
   padding: 5px 10px;
   cursor: pointer;
+  border-radius: 6px;
 }
