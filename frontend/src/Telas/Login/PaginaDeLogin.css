@@ -7,9 +7,9 @@
 }
 
 .box-pagina-de-login {
-      background: #ffffff;
-      backdrop-filter: blur(15px);
-    border-radius: 20px;
+  background: #ffffff;
+  backdrop-filter: blur(15px);
+  border-radius: 20px;
   padding: 2rem;
   width: 360px;
   display: flex;
@@ -128,4 +128,16 @@
   font-size: 12px;
   color: #000000;
   text-align: center;
+}
+
+/* Mensagem de erro */
+.erro-mensagem {
+  padding: 12px;
+  background: #fee2e2;
+  border: 1px solid #fecaca;
+  border-radius: 6px;
+  color: #7f1d1d;
+  font-size: 13px;
+  text-align: center;
+  font-weight: 500;
 }
